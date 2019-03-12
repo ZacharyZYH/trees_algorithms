@@ -24,6 +24,10 @@ public class Test {
         System.out.println(900 + " inserts, searches and deletes:");
         arr = setTestArray(900);
         test(arr);
+        System.out.println(" ");
+        System.out.println(2000 + " inserts, searches and deletes:");
+        arr = setTestArray(2000);
+        test(arr);
         return;
     }
 
