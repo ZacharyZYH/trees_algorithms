@@ -6,6 +6,19 @@ import java.util.ArrayList;
  * BinarySearchTree
  */
 public class BinarySearchTree {
+    public class TreeNode {
+        public TreeNode lChild = null;
+        public TreeNode rChild = null;
+        public TreeNode parent = null;
+        public int key;
+        public int height;
+    
+        public TreeNode(){}
+    
+        public TreeNode(int key){
+            this.key = key;
+        }
+    }    
     public TreeNode root = null;
 
     public BinarySearchTree(){}
