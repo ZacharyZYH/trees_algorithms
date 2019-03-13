@@ -81,7 +81,6 @@ public class BinarySearchTree {
         }else{
             root=(root.lChild!=null)?root.lChild:root.rChild;
         }
-        
         return root;
     }
 

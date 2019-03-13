@@ -60,6 +60,19 @@ public class RBTree {
         return rotateL(t);
     }
 
+    public boolean search(int key) {
+        Node t = root;
+        while (t != null) {
+            if (key < t.key)
+                t = t.lChild;
+            else if (key > t.key)
+                t = t.rChild;
+            else
+                return true;
+        }
+        return false;
+    }
+
     public void insert(int key) {
         root = insert(root, key);
         root.color = Color.BLACK;
@@ -223,19 +236,6 @@ public class RBTree {
         return t;
     }
 
-    public boolean search(int key) {
-        Node t = root;
-        while (t != null) {
-            if (key < t.key)
-                t = t.lChild;
-            else if (key > t.key)
-                t = t.rChild;
-            else
-                return true;
-        }
-        return false;
-    }
-
     public void printTree() {
         System.out.println(toGraph("", "", root).replaceAll("\\s+$", ""));
     }
@@ -243,11 +243,11 @@ public class RBTree {
     private String toGraph(String head, String bar, Node t) {
         String graph = "";
         if (t != null) {
-            graph += toGraph(head + "　　", "／", t.rChild);
+            graph += toGraph(head + "    ", "/", t.rChild);
             String node = t.color == Color.RED ? "RED" : "BLACK";
             node += ":" + t.key;
             graph += String.format("%s%s%s%n", head, bar, node);
-            graph += toGraph(head + "　　", "＼", t.lChild);
+            graph += toGraph(head + "    ", "\\", t.lChild);
         }
         return graph;
     }

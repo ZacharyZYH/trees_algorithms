@@ -3,9 +3,9 @@ package yuhaoz18;
 import java.util.ArrayList;
 
 /**
-* AVLTree
+* BalancedBSTree
 */
-class AVLTree{
+public class BalancedBSTree {
     public class TreeNode {
         private int h;
         private int balance;
@@ -18,80 +18,14 @@ class AVLTree{
             this.h = 1;
             this.balance = 0;
         }
-        public TreeNode next(){
-            return getHigherNode(this.key);
-        }
-        public TreeNode previus(){
-            return getLowerNode(this.key);
-        }
     }
 
-    public AVLTree(){}
+    public BalancedBSTree(){}
     
-    public static AVLTree create(){
-        return new AVLTree();
+    public static BalancedBSTree create(){
+        return new BalancedBSTree();
     }
     private TreeNode root;
-    
-    private TreeNode getHigherNode(int key) {
-        TreeNode p = root;
-        while (p != null) {
-            int cmp = key - p.key;
-            if (cmp < 0) {
-                if (p.left != null)
-                p = p.left;
-                else
-                return p;
-            } else {
-                if (p.right != null) {
-                    p = p.right;
-                } else {
-                    TreeNode parent = p.parent;
-                    TreeNode ch = p;
-                    while (parent != null && ch == parent.right) {
-                        ch = parent;
-                        parent = parent.parent;
-                    }
-                    return parent;
-                }
-            }
-        }
-        return null;
-    }
-    
-    private TreeNode getLowerNode(int key) {
-        TreeNode p = root;
-        while (p != null) {
-            int cmp = key - p.key;
-            if (cmp > 0) {
-                if (p.right != null)
-                p = p.right;
-                else
-                return p;
-            } else {
-                if (p.left != null) {
-                    p = p.left;
-                } else {
-                    TreeNode parent = p.parent;
-                    TreeNode ch = p;
-                    while (parent != null && ch == parent.left) {
-                        ch = parent;
-                        parent = parent.parent;
-                    }
-                    return parent;
-                }
-            }
-        }
-        return null;
-    }
-    
-    public TreeNode getFirstNode(){
-        return min(root);
-    }
-    
-    public TreeNode getLastNode(){
-        return max(root);
-    }
     
     private int height(TreeNode x, TreeNode y){
         if(x == null && y == null) return 0;
@@ -107,15 +41,32 @@ class AVLTree{
         else return x.h - y.h;
     }
     
+    private boolean search(TreeNode node, int key){
+        if(node == null) return false;
+        if(key == node.key){
+            return true;
+        }else if(key > node.key){
+            return search(node.right, key);
+        }else{
+            return search(node.left, key);
+        }
+    }
+    
+    public boolean search(int key) {
+        return search(root, key);
+    }
+    
+    public void insert(int key) {
+        root = insert(root, key, null);
+    }
+    
     private TreeNode insert (TreeNode node,int key, TreeNode parent){
         if (node == null){
             TreeNode newnode = new TreeNode(key, parent);
             return newnode;
         }
-        int compareResult = key - node.key;
-        if (compareResult > 0){node.right = insert(node.right, key, node); node.h = height(node.left, node.right) + 1;}
-        else if(compareResult < 0){node.left = insert(node.left, key, node); node.h = height(node.left, node.right) + 1;}
-        
+        if (key > node.key){node.right = insert(node.right, key, node); node.h = height(node.left, node.right) + 1;}
+        else if(key < node.key){node.left = insert(node.left, key, node); node.h = height(node.left, node.right) + 1;}
         node.balance = balance(node.left, node.right);
         if(node.balance == -2){
             node = leftRotation(node);
@@ -172,16 +123,15 @@ class AVLTree{
         return node;
     }
     
-    public void insert(int key) {
-        root = insert(root, key, null);
+    public void delete(int key) {
+        root = delete(root, key);
     }
     
     private TreeNode delete(TreeNode node, int key){
         if(node == null) return null;
-        int compareResult = key - node.key;
-        if(compareResult > 0){
+        if(key > node.key){
             node.right = delete(node.right, key);
-        }else if(compareResult < 0){
+        }else if(key < node.key){
             node.left = delete(node.left, key);
         }else{
             if(node.right == null && node.left == null){
@@ -218,42 +168,9 @@ class AVLTree{
         return node;
     }
     
-    public void delete(int key) {
-        root = delete(root, key);
-    }
-    
-    public int minKey(){
-        return min(root).key;
-    }
-    
-    public int maxKey(){
-        return max(root).key;
-    }
-    
     private TreeNode min(TreeNode node){
         if(node.left == null) return node;
         return min(node.left);
-    }
-    
-    private TreeNode max(TreeNode node){
-        if(node.right == null) return node;
-        return min(node.right);
-    }
-    
-    private boolean search(TreeNode node, int key){
-        if(node == null) return false;
-        int compareResult = key - node.key;
-        if(compareResult == 0){
-            return true;
-        }else if(compareResult > 0){
-            return search(node.right, key);
-        }else{
-            return search(node.left, key);
-        }
-    }
-    
-    public boolean search(int key) {
-        return search(root, key);
     }
     
     public void printTree(){
@@ -274,5 +191,4 @@ class AVLTree{
             System.out.print("\n");
         }
     }
-    
 }

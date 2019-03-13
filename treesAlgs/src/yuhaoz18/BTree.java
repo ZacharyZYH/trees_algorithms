@@ -58,12 +58,11 @@ public class BTree {
         if (t == null) return new NodeA(key, null, null);
         int i;
         for (i = 0; i < t.numbers.size(); i++) {
-            final int cmp = key - t.numbers.get(i);
-            if (cmp < 0) {
+            if (key < t.numbers.get(i)) {
                 t.children.set(i, insert(t.children.get(i), key));
                 return balance(t, i);
             }
-            else if (cmp == 0) {
+            else if (key == t.numbers.get(i)) {
                 t.numbers.set(i, key);
                 return t;
             }
@@ -102,20 +101,18 @@ public class BTree {
         if (t == null) return;
         int i;
         for (i = 0; i < t.numbers.size(); i++) {
-            final int cmp = key - t.numbers.get(i);
-            if (cmp < 0) {
+            if (key < t.numbers.get(i)) {
                 delete(t.children.get(i), key);
                 balanceL(t, i);
                 return;
             }
-            else if (cmp == 0) {
+            else if (key == t.numbers.get(i)) {
                 if (t.children.get(i) == null) {
                     
                     t.numbers.remove(i);
                     t.children.remove(i);
                 }
                 else {
-                    
                     t.numbers.set(i, deleteMax(t.children.get(i)));
                     balanceL(t, i);
                 }
@@ -211,10 +208,10 @@ public class BTree {
         if (t == null) return "";
         int i = t.children.size();
         String graph = toGraph(head + "    ", t.children.get(--i));
-        graph += head + "∧" + nl;
+        graph += head + " " + nl;
         do {
             graph += head + t.numbers.get(--i) + nl;
-            if (i == 0) graph += head + "∨" + nl;
+            if (i == 0) graph += head + " " + nl;
             graph += toGraph(head + "    ", t.children.get(i));
         } while (i > 0);
         return graph;
