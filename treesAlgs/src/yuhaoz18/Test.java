@@ -9,24 +9,24 @@ public class Test {
     public static void main(String[] args) {
         
         int[] arr;
-        System.out.println(300 + " inserts, searches and deletes:");
-        arr = setTestArray(300);
+        // test(arr);
+        System.out.println(100 + " inserts, searches and deletes:");
+        arr = setTestArray(100);
+        test(arr);
+        System.out.println(100 + " inserts, searches and deletes:");
+        arr = setTestArray(100);
         test(arr);
         System.out.println(" ");
-        System.out.println(500 + " inserts, searches and deletes:");
-        arr = setTestArray(500);
+        System.out.println(1000 + " inserts, searches and deletes:");
+        arr = setTestArray(1000);
         test(arr);
         System.out.println(" ");
-        System.out.println(700 + " inserts, searches and deletes:");
-        arr = setTestArray(700);
+        System.out.println(10000 + " inserts, searches and deletes:");
+        arr = setTestArray(10000);
         test(arr);
         System.out.println(" ");
-        System.out.println(900 + " inserts, searches and deletes:");
-        arr = setTestArray(900);
-        test(arr);
-        System.out.println(" ");
-        System.out.println(2000 + " inserts, searches and deletes:");
-        arr = setTestArray(2000);
+        System.out.println(100000 + " inserts, searches and deletes:");
+        arr = setTestArray(100000);
         test(arr);
         return;
     }
@@ -42,12 +42,26 @@ public class Test {
 
     private static void test(int[] arr) {
         BinarySearchTree BST = BinarySearchTree.create();
-        AVLTree AVL = AVLTree.create();
+        BalancedBSTree AVL = BalancedBSTree.create();
         BTree BT = BTree.create();
         RBTree RBT = RBTree.create();
 
         int len = arr.length;
         long time, newTime;
+        
+        
+        //traverse time
+        time = System.nanoTime();
+        newTime = time;
+
+        int a;
+        for (int i = 0; i < len; i++) {
+            a = arr[i];
+        }
+        newTime = System.nanoTime();
+        long trTime = newTime - time;
+        time = newTime;
+        
 
         //BST
         System.out.println("BST:");
@@ -58,25 +72,25 @@ public class Test {
             BST.insert(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of inserting: " + (newTime - time) + " nano-seconds");
+        System.out.println("time of inserting: " + (newTime - time - trTime) + " nano-seconds");
         time = newTime;
 
         for (int i = 0; i < len; i++) {
             BST.search(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of searching: " + (newTime - time) + " nano-seconds");
+        System.out.println("time of searching: " + (newTime - time - trTime) + " nano-seconds");
         time = newTime;
 
         for (int i = 0; i < len; i++) {
             BST.delete(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of deleting: " + (newTime - time) + " nano-seconds\n");
+        System.out.println("time of deleting: " + (newTime - time - trTime) + " nano-seconds\n");
         time = newTime;
 
-        // AVLTree
-        System.out.println("AVLTree:");
+        // BalancedBSTree
+        System.out.println("BalancedBSTree:");
         time = System.nanoTime();
         newTime = time;
 
@@ -84,21 +98,21 @@ public class Test {
             AVL.insert(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of inserting: " + (newTime - time) + " nano-seconds");
+        System.out.println("time of inserting: " + (newTime - time - trTime) + " nano-seconds");
         time = newTime;
 
         for (int i = 0; i < len; i++) {
             AVL.search(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of searching: " + (newTime - time) + " nano-seconds");
+        System.out.println("time of searching: " + (newTime - time - trTime) + " nano-seconds");
         time = newTime;
 
         for (int i = 0; i < len; i++) {
             AVL.delete(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of deleting: " + (newTime - time) + " nano-seconds\n");
+        System.out.println("time of deleting: " + (newTime - time - trTime) + " nano-seconds\n");
         time = newTime;
 
         // BTree
@@ -110,21 +124,21 @@ public class Test {
             BT.insert(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of inserting: " + (newTime - time) + " nano-seconds");
+        System.out.println("time of inserting: " + (newTime - time - trTime) + " nano-seconds");
         time = newTime;
 
         for (int i = 0; i < len; i++) {
             BT.search(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of searching: " + (newTime - time) + " nano-seconds");
+        System.out.println("time of searching: " + (newTime - time - trTime) + " nano-seconds");
         time = newTime;
 
         for (int i = 0; i < len; i++) {
             BT.delete(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of deleting: " + (newTime - time) + " nano-seconds\n");
+        System.out.println("time of deleting: " + (newTime - time - trTime) + " nano-seconds\n");
         time = newTime;
 
         // RBTree
@@ -136,21 +150,21 @@ public class Test {
             RBT.insert(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of inserting: " + (newTime - time) + " nano-seconds");
+        System.out.println("time of inserting: " + (newTime - time - trTime) + " nano-seconds");
         time = newTime;
 
         for (int i = 0; i < len; i++) {
             RBT.search(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of searching: " + (newTime - time) + " nano-seconds");
+        System.out.println("time of searching: " + (newTime - time - trTime) + " nano-seconds");
         time = newTime;
 
         for (int i = 0; i < len; i++) {
             RBT.delete(arr[i]);
         }
         newTime = System.nanoTime();
-        System.out.println("time of deleting: " + (newTime - time) + " nano-seconds\n");
+        System.out.println("time of deleting: " + (newTime - time - trTime) + " nano-seconds\n");
         time = newTime;
     }
 }
